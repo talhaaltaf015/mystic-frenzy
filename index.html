@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PublishFlow — TikTok publishing for n8n</title>
+<meta name="description" content="PublishFlow is an n8n workflow that publishes videos to TikTok, tracks their status, and pulls performance data back into your automation.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="5" cy="13" r="3.4" stroke="#1A1F1C" stroke-width="1.4"/>
+        <circle cx="21" cy="6" r="3.4" stroke="#E1583F" stroke-width="1.4"/>
+        <circle cx="21" cy="20" r="3.4" stroke="#2C9C93" stroke-width="1.4"/>
+        <path d="M8.2 11.6L17.8 7.4M8.2 14.4L17.8 18.6" stroke="#1A1F1C" stroke-width="1.2"/>
+      </svg>
+      <span class="brand-name">PublishFlow</span>
+    </a>
+    <nav class="site-nav">
+      <a href="index.html" aria-current="page">Overview</a>
+      <a href="workflow.html">How the workflow works</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="hero-tag">n8n community node</span>
+      <h1>Publish to TikTok from your n8n workflows.</h1>
+      <p class="lede">PublishFlow connects n8n to the TikTok Content Posting API, so you can schedule uploads, watch publish status, and pull video metrics back into any automation — without touching TikTok's API directly.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="workflow.html">See how it works</a>
+        <a class="btn btn-ghost" href="https://github.com" target="_blank" rel="noopener">View on GitHub</a>
+      </div>
+    </div>
+    <div class="hero-diagram" aria-hidden="true">
+      <svg viewBox="0 0 360 260" width="100%" role="img" aria-label="Diagram: n8n workflow connects through PublishFlow to the TikTok API">
+        <g font-family="IBM Plex Mono, monospace" font-size="12" fill="#4B564C">
+          <rect x="10" y="30" width="108" height="52" rx="3" fill="#FFFFFF" stroke="#CBCFC0"/>
+          <text x="26" y="61" fill="#1A1F1C">n8n workflow</text>
+
+          <rect x="126" y="104" width="118" height="52" rx="3" fill="#FBEAE6" stroke="#E1583F"/>
+          <text x="140" y="135" fill="#A83E29">PublishFlow node</text>
+
+          <rect x="242" y="178" width="108" height="52" rx="3" fill="#E4F1EF" stroke="#2C9C93"/>
+          <text x="264" y="209" fill="#1F6E68">TikTok API</text>
+
+          <path d="M64 82 L64 96 L185 96 L185 104" stroke="#CBCFC0" stroke-width="1.4" fill="none"/>
+          <path d="M185 156 L185 170 L296 170 L296 178" stroke="#CBCFC0" stroke-width="1.4" fill="none"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>What it does</h2>
+      <span class="section-num">01</span>
+    </div>
+    <div class="feature-grid">
+      <div class="feature">
+        <div class="glyph">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="3" width="16" height="16" rx="2" stroke="#1A1F1C" stroke-width="1.3"/><path d="M7 11h8M11 7v8" stroke="#E1583F" stroke-width="1.3"/></svg>
+        </div>
+        <h3>Publish on schedule</h3>
+        <p>Trigger a workflow on a timer, a form submission, or an upstream event, and PublishFlow uploads the video to the connected TikTok account.</p>
+      </div>
+      <div class="feature">
+        <div class="glyph">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="8" stroke="#1A1F1C" stroke-width="1.3"/><path d="M11 6.5v5l3.5 2" stroke="#2C9C93" stroke-width="1.3"/></svg>
+        </div>
+        <h3>Track publish status</h3>
+        <p>TikTok processes uploads asynchronously. PublishFlow polls the status endpoint and reports back <span class="mono" style="font-size:0.85em">PROCESSING</span>, <span class="mono" style="font-size:0.85em">PUBLISH_COMPLETE</span>, or the failure reason.</p>
+      </div>
+      <div class="feature">
+        <div class="glyph">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 17V9M11 17V5M18 17v-6" stroke="#1A1F1C" stroke-width="1.3"/></svg>
+        </div>
+        <h3>Pull metrics back</h3>
+        <p>Read view, like, comment, and share counts for videos your workflow published, so downstream nodes can report or react to performance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>How a run works</h2>
+      <span class="section-num">02</span>
+    </div>
+    <div class="prose flow">
+      <div class="flow-step">
+        <div class="node">1</div>
+        <div>
+          <h3>Connect a TikTok account</h3>
+          <p>Authorize PublishFlow once, from inside n8n, using TikTok's OAuth flow. n8n stores the access and refresh tokens as an encrypted credential — PublishFlow never sees your TikTok password.</p>
+          <span class="tag">oauth2 / user consent screen</span>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="node">2</div>
+        <div>
+          <h3>Add the node to a workflow</h3>
+          <p>Drop the PublishFlow node after whatever produces your video: a form, cloud storage, a rendering step, or another API. Point it at the file and set a caption, privacy level, and audience settings.</p>
+          <span class="tag">workflow canvas</span>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="node">3</div>
+        <div>
+          <h3>PublishFlow talks to TikTok</h3>
+          <p>The node initializes an upload, sends the video, and polls until TikTok finishes processing it. Every call and response is logged in the n8n execution so failures are easy to trace.</p>
+          <span class="tag">content posting api</span>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="node">4</div>
+        <div>
+          <h3>Your workflow continues</h3>
+          <p>On success, PublishFlow outputs the published video's ID and share URL, ready for the next node — a Slack message, a spreadsheet row, or a scheduling database.</p>
+          <span class="tag">output</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap prose">
+    <div class="section-head">
+      <h2>Built for review</h2>
+      <span class="section-num">03</span>
+    </div>
+    <p>PublishFlow requests only the TikTok scopes it needs to publish and read back the videos your own workflows create. It does not read your existing content library, does not message on your behalf, and does not store video files after a run completes.</p>
+    <p>A full breakdown of the scopes requested, the data handled, and where it lives is on the <a href="workflow.html">workflow page</a>. Data handling and retention are covered in the <a href="privacy.html">privacy policy</a>.</p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span class="fine">© 2026 PublishFlow. Mystic Frenzy — New York, USA</span>
+    <nav>
+      <a href="workflow.html">Workflow</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="mailto:talhaaltaf015@gmail.com">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

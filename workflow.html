@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How the workflow works — PublishFlow</title>
+<meta name="description" content="A detailed walkthrough of how PublishFlow's n8n node uses the TikTok API, including scopes, data flow, and redirect URIs.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="5" cy="13" r="3.4" stroke="#1A1F1C" stroke-width="1.4"/>
+        <circle cx="21" cy="6" r="3.4" stroke="#E1583F" stroke-width="1.4"/>
+        <circle cx="21" cy="20" r="3.4" stroke="#2C9C93" stroke-width="1.4"/>
+        <path d="M8.2 11.6L17.8 7.4M8.2 14.4L17.8 18.6" stroke="#1A1F1C" stroke-width="1.2"/>
+      </svg>
+      <span class="brand-name">PublishFlow</span>
+    </a>
+    <nav class="site-nav">
+      <a href="index.html">Overview</a>
+      <a href="workflow.html" aria-current="page">How the workflow works</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </nav>
+  </div>
+</header>
+
+<section class="block" style="border-bottom:1px solid var(--line); padding-top:56px;">
+  <div class="wrap prose legal">
+    <h1 style="font-size:2rem;">How the PublishFlow workflow works</h1>
+    <p class="lede" style="margin-top:14px;">This page describes, in technical detail, how the PublishFlow n8n node integrates with the TikTok API — for developers evaluating the integration and for TikTok's app review team.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap prose legal">
+
+    <h2>1. What triggers a call to TikTok</h2>
+    <p>The PublishFlow node only contacts TikTok when it executes as a step inside an n8n workflow that a user has built and run themselves — on a manual click, a schedule the user set, or an upstream event the user configured (for example, a new file landing in cloud storage). PublishFlow never calls the TikTok API on a schedule of its own, and never runs in the background outside of a user's workflow.</p>
+
+    <h2>2. Scopes requested</h2>
+    <p>The node requests the minimum scopes needed to publish a video and read back what happened to it. It does not request scopes for messaging, following, or reading a user's existing content library beyond what it publishes.</p>
+    <table class="scope-table">
+      <thead>
+        <tr><th>Scope</th><th>Used for</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="scope-name">user.info.basic</td>
+          <td>Confirming which TikTok account is connected, and showing its display name in the n8n credential so users know which account a workflow will post to.</td>
+        </tr>
+        <tr>
+          <td class="scope-name">video.publish</td>
+          <td>Uploading a video file and creating a post on the connected account, with the caption and privacy level set in the workflow.</td>
+        </tr>
+        <tr>
+          <td class="scope-name">video.list</td>
+          <td>Looking up publish status and basic metrics for videos that this workflow itself published, so the node can report success or failure back into the workflow.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>3. Authorization flow</h2>
+    <p>PublishFlow uses TikTok's standard OAuth 2.0 authorization code flow with PKCE. A user starts authorization from inside n8n's credential screen, approves the requested scopes on TikTok's own consent page, and is redirected back to a fixed callback URL that n8n controls. n8n exchanges the code for an access token and refresh token and stores both as an encrypted credential — PublishFlow's own code never sees or stores the user's TikTok password.</p>
+    <p class="mono" style="font-size:0.9rem; color:var(--ink-soft);">Redirect URI: https://yourdomain.vercel.app/oauth/callback</p>
+    <div class="callout"><strong>Note for reviewers:</strong> replace the redirect URI above with the exact callback URL registered in your TikTok developer app before submitting for review — it must match exactly.</div>
+
+    <h2>4. Data handling</h2>
+    <p>A single workflow run passes the following data through PublishFlow, in memory, for the duration of that run:</p>
+    <ul>
+      <li>The video file the user supplies as input — sent directly to TikTok's upload endpoint and not written to disk by PublishFlow.</li>
+      <li>The caption, privacy setting, and posting options the user configures on the node.</li>
+      <li>The TikTok-issued video ID, publish status, and metric values returned by TikTok, which are passed to the next node in the workflow and stored only where the user's own workflow chooses to store them (a database, spreadsheet, or log the user controls).</li>
+    </ul>
+    <p>PublishFlow does not operate a server that retains video files, captions, or metrics after a workflow run completes. Long-term storage of any data is entirely under the control of the n8n instance the user runs and the destinations their workflow writes to.</p>
+
+    <h2>5. Error handling</h2>
+    <p>If TikTok returns an error — an expired token, a rejected upload, a rate limit — the node surfaces TikTok's error code and message as output, so the workflow can branch, retry, or alert someone. Expired access tokens are refreshed automatically using the stored refresh token before a call is retried.</p>
+
+    <h2>6. Where the code runs</h2>
+    <p>The node runs inside the user's own n8n instance, whether that's self-hosted or n8n Cloud. There is no PublishFlow-operated backend sitting between the user's n8n instance and the TikTok API.</p>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span class="fine">© 2026 PublishFlow. Mystic Frenzy — New York, USA</span>
+    <nav>
+      <a href="workflow.html">Workflow</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="mailto:talhaaltaf015@gmail.com">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

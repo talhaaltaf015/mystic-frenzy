@@ -1,0 +1,393 @@
+/* ============================================================
+   PublishFlow — design tokens
+   Palette grounded in the subject: n8n-style flow automation
+   (coral) meeting the TikTok content layer (teal). Paper-grey
+   base keeps it a working technical document, not a marketing
+   poster.
+   ============================================================ */
+
+:root {
+  --bg: #EEF0EA;
+  --surface: #FFFFFF;
+  --ink: #1A1F1C;
+  --ink-soft: #4B564C;
+  --ink-faint: #7C8778;
+  --line: #CBCFC0;
+  --coral: #E1583F;
+  --coral-ink: #A83E29;
+  --teal: #2C9C93;
+  --teal-soft: #E4F1EF;
+  --coral-soft: #FBEAE6;
+  --radius: 3px;
+  --max: 720px;
+  --wide: 1040px;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+h1, h2, h3, .mono {
+  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+h1 { font-size: 2.6rem; line-height: 1.12; font-weight: 600; letter-spacing: -0.02em; }
+h2 { font-size: 1.5rem; margin: 0 0 0.6em; }
+h3 { font-size: 1.05rem; margin: 0 0 0.4em; }
+
+p { margin: 0 0 1em; color: var(--ink-soft); }
+a { color: var(--coral-ink); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { color: var(--coral); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+.wrap {
+  max-width: var(--wide);
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+.prose {
+  max-width: var(--max);
+}
+
+/* ---------- Header ---------- */
+
+.site-header {
+  border-bottom: 1px solid var(--line);
+  padding: 22px 0;
+}
+
+.site-header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.brand svg { display: block; }
+
+.brand-name {
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+nav.site-nav {
+  display: flex;
+  gap: 26px;
+  flex-wrap: wrap;
+}
+
+nav.site-nav a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-size: 0.95rem;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+}
+
+nav.site-nav a:hover,
+nav.site-nav a[aria-current="page"] {
+  color: var(--ink);
+  border-bottom-color: var(--coral);
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  padding: 76px 0 64px;
+  border-bottom: 1px solid var(--line);
+}
+
+.hero .wrap {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.hero-tag {
+  display: inline-block;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.82rem;
+  color: var(--teal);
+  background: var(--teal-soft);
+  border: 1px solid #c7e4e0;
+  border-radius: var(--radius);
+  padding: 4px 9px;
+  margin-bottom: 18px;
+}
+
+.hero p.lede {
+  font-size: 1.12rem;
+  color: var(--ink-soft);
+  max-width: 46ch;
+}
+
+.cta-row {
+  display: flex;
+  gap: 14px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-block;
+  padding: 11px 20px;
+  border-radius: var(--radius);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.92rem;
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+
+.btn-primary {
+  background: var(--ink);
+  color: var(--bg);
+}
+.btn-primary:hover { background: var(--coral-ink); color: #fff; }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line);
+}
+.btn-ghost:hover { border-color: var(--ink); color: var(--ink); }
+
+/* ---------- Sections ---------- */
+
+section.block {
+  padding: 60px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+section.block:last-of-type { border-bottom: none; }
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 34px;
+  flex-wrap: wrap;
+}
+
+.section-num {
+  font-family: "IBM Plex Mono", monospace;
+  color: var(--ink-faint);
+  font-size: 0.9rem;
+}
+
+/* ---------- Feature grid ---------- */
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.feature {
+  background: var(--surface);
+  padding: 26px 24px;
+}
+
+.feature .glyph {
+  margin-bottom: 14px;
+}
+
+.feature p { margin: 0; font-size: 0.96rem; }
+
+/* ---------- Flow steps (node/connector motif — content is sequential) ---------- */
+
+.flow {
+  position: relative;
+}
+
+.flow-step {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 20px;
+  position: relative;
+  padding-bottom: 40px;
+}
+
+.flow-step:last-child { padding-bottom: 0; }
+
+.flow-step::before {
+  content: "";
+  position: absolute;
+  left: 21px;
+  top: 44px;
+  bottom: -4px;
+  width: 1px;
+  background: var(--line);
+}
+
+.flow-step:last-child::before { display: none; }
+
+.node {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--ink);
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.95rem;
+  color: var(--ink);
+  z-index: 1;
+}
+
+.flow-step h3 { margin-bottom: 6px; }
+.flow-step p { margin: 0; font-size: 0.97rem; }
+
+.flow-step .tag {
+  display: inline-block;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  margin-top: 8px;
+}
+
+/* ---------- Scope table ---------- */
+
+table.scope-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0 8px;
+  font-size: 0.95rem;
+}
+
+table.scope-table th,
+table.scope-table td {
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+table.scope-table th {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.8rem;
+  color: var(--ink-faint);
+  font-weight: 500;
+}
+
+table.scope-table td.scope-name {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.88rem;
+  color: var(--coral-ink);
+  white-space: nowrap;
+}
+
+/* ---------- Callout ---------- */
+
+.callout {
+  background: var(--coral-soft);
+  border: 1px solid #f0cec5;
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  font-size: 0.94rem;
+  color: var(--ink-soft);
+  margin: 22px 0;
+}
+
+.callout strong { color: var(--ink); }
+
+/* ---------- Legal pages ---------- */
+
+.legal h2 {
+  margin-top: 2.2em;
+  padding-top: 0.2em;
+}
+.legal h2:first-of-type { margin-top: 0; }
+
+.legal ul { color: var(--ink-soft); padding-left: 1.2em; }
+.legal li { margin-bottom: 0.5em; }
+
+.updated {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.85rem;
+  color: var(--ink-faint);
+  margin-bottom: 2.4em;
+}
+
+/* ---------- Footer ---------- */
+
+footer.site-footer {
+  padding: 40px 0 60px;
+}
+
+footer.site-footer .wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+footer.site-footer nav {
+  display: flex;
+  gap: 20px;
+}
+
+footer.site-footer a {
+  color: var(--ink-faint);
+  font-size: 0.88rem;
+  text-decoration: none;
+}
+footer.site-footer a:hover { color: var(--ink); }
+
+footer .fine {
+  font-size: 0.85rem;
+  color: var(--ink-faint);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 860px) {
+  .hero .wrap { grid-template-columns: 1fr; }
+  .feature-grid { grid-template-columns: 1fr; }
+  h1 { font-size: 2.1rem; }
+  .hero-diagram { max-width: 320px; }
+}
+
+@media (max-width: 560px) {
+  .site-header .wrap { flex-direction: column; align-items: flex-start; gap: 14px; }
+  section.block { padding: 44px 0; }
+  table.scope-table { font-size: 0.86rem; }
+}
